@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/05/25 17:38:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:41:39 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int argc, char *argv[])
 	pthread_t	thread2;
 	t_data		data;
 
+	(void)argc;
+	(void)argv;
 	data.death = 0;
 	pthread_create(&thread1, NULL, (void*)myTurn, (void *)&data);
 	pthread_create(&thread2, NULL, (void*)yourTurn, (void *)&data);
