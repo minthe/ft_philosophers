@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/05/26 18:01:32 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:17:15 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void	*myTurn(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < 5000000)
+	gettimeofday(&data->start, NULL);
+	while (i < 50)
 	{
 		pthread_mutex_lock(&data->mutex1);
 		data->death++;
 		pthread_mutex_unlock(&data->mutex1);
 		i++;
 	}
+	gettimeofday(&data->end, NULL);
 	return (NULL);
 }
 
@@ -32,7 +34,7 @@ void	*yourTurn(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < 1000000)
+	while (i < 1000)
 	{
 		pthread_mutex_lock(&data->mutex1);
 		data->death++;
@@ -62,6 +64,9 @@ int	main(int argc, char *argv[])
 	if (pthread_join(thread2, NULL) != 0)
 		return (4);
 	pthread_mutex_destroy(&data.mutex1);
+	
 	printf("Death %d\n", data.death);
+	printf("Time taken for all threads: %ld micro seconds\n",\
+		((data.end.tv_sec * 1000000 + data.end.tv_usec) - (data.start.tv_sec * 1000000 + data.start.tv_usec)));
 	return (0);
 }

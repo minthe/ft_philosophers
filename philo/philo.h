@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/05/26 17:39:43 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:13:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_data
 	int				death;
 	pthread_mutex_t	mutex1;
 	pthread_mutex_t	mutex2;
+	struct timeval	start;
+	struct timeval	end;
 } t_data;
 
 #endif
