@@ -6,11 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/05/26 18:17:15 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:22:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
 
 void	*myTurn(t_data *data)
 {
@@ -66,7 +68,7 @@ int	main(int argc, char *argv[])
 	pthread_mutex_destroy(&data.mutex1);
 	
 	printf("Death %d\n", data.death);
-	printf("Time taken for all threads: %ld micro seconds\n",\
+	printf("Time taken for all threads: %ld mili seconds\n",\
 		((data.end.tv_sec * 1000000 + data.end.tv_usec) - (data.start.tv_sec * 1000000 + data.start.tv_usec)));
 	return (0);
 }
