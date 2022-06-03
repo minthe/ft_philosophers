@@ -6,69 +6,47 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/05/27 19:22:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:50:59 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-
-void	*myTurn(t_data *data)
+static int	parse_infos(t_data *data, int argc, char *argv[])
 {
 	int	i;
 
-	i = 0;
-	gettimeofday(&data->start, NULL);
-	while (i < 50)
+	i = 1;
+	while (i < argc)
 	{
-		pthread_mutex_lock(&data->mutex1);
-		data->death++;
-		pthread_mutex_unlock(&data->mutex1);
+		if (check_char(argv[i]) == -1)
+			return (-1);
+		else if (ft_atoi(argv[i]) < 0)
+			return (-1);
 		i++;
 	}
-	gettimeofday(&data->end, NULL);
-	return (NULL);
-}
-
-void	*yourTurn(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < 1000)
-	{
-		pthread_mutex_lock(&data->mutex1);
-		data->death++;
-		pthread_mutex_unlock(&data->mutex1);
-		i++;
-	}
-	sleep(1);
-	return (NULL);
+	if (argc == 6 && ft_atoi(argv[5]) == 0)
+		return (-1);
+	data->nbr_philo = ft_atoi(argv[1]);
+	data->time_die = ft_atoi(argv[2]);
+	data->time_eat = ft_atoi(argv[3]);
+	data->time_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->nbr_eat = ft_atoi(argv[5]);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_data			data;
-	pthread_t		thread1;
-	pthread_t		thread2;
+	t_data		data;
 
-	(void)argc;
-	(void)argv;
-	data.death = 0;
-	pthread_mutex_init(&data.mutex1, NULL);
-	if (pthread_create(&thread1, NULL, (void*)myTurn, (void *)&data) != 0)
+	data.nbr_eat = ft_atoi(argv[5]);
+	if (argc != 5 && argc != 6)
 		return (1);
-	if (pthread_create(&thread2, NULL, (void*)yourTurn, (void *)&data) != 0)
-		return (2);
-	if (pthread_join(thread1, NULL) != 0)
-		return (3);
-	if (pthread_join(thread2, NULL) != 0)
-		return (4);
-	pthread_mutex_destroy(&data.mutex1);
-	
-	printf("Death %d\n", data.death);
-	printf("Time taken for all threads: %ld mili seconds\n",\
-		((data.end.tv_sec * 1000000 + data.end.tv_usec) - (data.start.tv_sec * 1000000 + data.start.tv_usec)));
+	if (parse_infos(&data, argc, argv) == -1)
+	{
+		printf ("Input Error\n");
+		return (1);
+	}
 	return (0);
 }

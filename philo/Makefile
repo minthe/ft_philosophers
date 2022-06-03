@@ -1,10 +1,15 @@
-SOURCE =	main.c \
+NAME	= philo
 
-OBJECTS = $(SOURCE:.c=.o)
+CC		= gcc
 
-FLAGS = -Werror -Wall -Wextra -fsanitize=thread -g
+FLAGS	= -Werror -Wall -Wextra -fsanitize=thread -g
 
-NAME = philo
+RM		= rm -f
+
+SOURCE	=	main.c \
+			utils.c \
+
+OBJECTS	= $(SOURCE:.c=.o)
 
 all: $(NAME)
 
