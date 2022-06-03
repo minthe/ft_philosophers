@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:11:54 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/03 14:41:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:48:34 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// checks if character is a digit
 static int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
@@ -20,6 +21,7 @@ static int	ft_isdigit(int c)
 		return (0);
 }
 
+// checks if character is a space
 static int	ft_isspace(int c)
 {
 	if ((c > 8 && c < 14) || (c == ' '))
@@ -28,6 +30,7 @@ static int	ft_isspace(int c)
 		return (0);
 }
 
+// takes a string and converts it into an integer
 int	ft_atoi(const char *str)
 {
 	int	sign;
@@ -51,6 +54,7 @@ int	ft_atoi(const char *str)
 	return (ret * sign);
 }
 
+// checks if string is composed only of digits, otherwise -1 returned
 int	check_char(const char *str)
 {
 	int	i;

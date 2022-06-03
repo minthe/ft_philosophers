@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/03 14:53:40 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/03 18:02:21 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdio.h>
+# include <stdlib.h>
 
-typedef struct s_philo
-{
-	int		id;
-} t_philo;
+typedef pthread_t		t_thread;
+typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_data
 {
@@ -31,12 +30,32 @@ typedef struct s_data
 	int				time_eat;
 	int				time_sleep;
 	int				nbr_eat;
-	pthread_mutex_t	mutex_fork;
+	t_mutex			*fork;
 	struct timeval	start;
 	struct timeval	end;
 } t_data;
 
-int	ft_atoi(const char *str);
-int	check_char(const char *str);
+typedef struct s_philo
+{
+	int			id;
+	t_thread	routine;
+	t_thread	monitor;
+	t_data		*data;
+} t_philo;
+
+
+/*
+** utils
+*/
+
+int		check_char(const char *str);
+
+int		ft_atoi(const char *str);
+void	ft_putchar_fd(char c, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_bzero(void *s, size_t n);
+void	*ft_memset(void *s, int c, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

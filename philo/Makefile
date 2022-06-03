@@ -2,12 +2,14 @@ NAME	= philo
 
 CC		= gcc
 
-FLAGS	= -Werror -Wall -Wextra -fsanitize=thread -g
+FLAGS	= -Werror -Wall -Wextra
 
 RM		= rm -f
 
 SOURCE	=	main.c \
 			utils.c \
+			utils2.c \
+			utils3.c \
 
 OBJECTS	= $(SOURCE:.c=.o)
 
