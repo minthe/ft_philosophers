@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/03 18:49:00 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/03 20:03:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ int	main(int argc, char *argv[])
 	t_data		data;
 	t_philo		*philo;
 
-	philo = ft_calloc(data.nbr_philo, sizeof(t_philo));
-	if (philo == NULL)
-		return (1); // add error handling
-	data.nbr_eat = ft_atoi(argv[5]);
 	if (argc != 5 && argc != 6)
 		return (1);
 	if (parse_infos(&data, argc, argv) == -1)
@@ -53,7 +49,10 @@ int	main(int argc, char *argv[])
 		printf ("Input Error\n");
 		return (1);
 	}
+	philo = ft_calloc(data.nbr_philo, sizeof(t_philo));
+	if (philo == NULL)
+		return (1); // add error handling
 	philo[2].id = 5;
-	ft_putnbr_fd(philo[2].data->nbr_philo, 1);
+	ft_putnbr_fd(philo[0].data->nbr_philo, 1);
 	return (0);
 }
