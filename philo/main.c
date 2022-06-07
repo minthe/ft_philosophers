@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/07 18:22:34 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:58:16 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char *argv[])
 	t_data		*data;
 	t_philo		*philo;
 
-	if (argc != 5 && argc != 6)
+	if (argc < 5 || argc > 6)
 		return (1);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (data == 0)
@@ -55,9 +55,9 @@ int	main(int argc, char *argv[])
 	philo = (t_philo *)malloc(sizeof(t_philo) * data->nbr_philo);
 	if (philo == NULL)
 		return (1); // add error handling
-	philo[0].id = 5;
-	philo[2].id = 2;
-	printf("test %d\n", philo[0].id);
-	printf("test %d\n", philo[2].id);
+	philo[1].id = 5;
+	philo[0].id = 2;
+	printf("test %d\n", philo[1].id);
+	printf("test %d\n", philo->id);
 	return (0);
 }
