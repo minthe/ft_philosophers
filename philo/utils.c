@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:11:54 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/03 17:48:34 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:51:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int	ft_isspace(int c)
 // takes a string and converts it into an integer
 int	ft_atoi(const char *str)
 {
-	int	sign;
-	int	ret;
+	int		sign;
+	long	ret;
 
 	ret = 0;
 	sign = 1;
@@ -46,7 +46,7 @@ int	ft_atoi(const char *str)
 			sign = sign * (-1);
 		str++;
 	}
-	while (ft_isdigit(*str))
+	while (*str)
 	{
 		ret = (ret * 10) + (*str - '0');
 		str++;

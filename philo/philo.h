@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/03 18:02:21 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:44:25 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_data
 	int				time_eat;
 	int				time_sleep;
 	int				nbr_eat;
-	t_mutex			*fork;
 	struct timeval	start;
 	struct timeval	end;
 } t_data;

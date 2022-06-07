@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/03 20:03:57 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:22:34 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,25 @@ static int	parse_infos(t_data *data, int argc, char *argv[])
 
 int	main(int argc, char *argv[])
 {
-	t_data		data;
+	t_data		*data;
 	t_philo		*philo;
 
 	if (argc != 5 && argc != 6)
 		return (1);
-	if (parse_infos(&data, argc, argv) == -1)
+	data = (t_data *)malloc(sizeof(t_data));
+	if (data == 0)
+		return (1); // add error handling
+	if (parse_infos(data, argc, argv) == -1)
 	{
 		printf ("Input Error\n");
 		return (1);
 	}
-	philo = ft_calloc(data.nbr_philo, sizeof(t_philo));
+	philo = (t_philo *)malloc(sizeof(t_philo) * data->nbr_philo);
 	if (philo == NULL)
 		return (1); // add error handling
-	philo[2].id = 5;
-	ft_putnbr_fd(philo[0].data->nbr_philo, 1);
+	philo[0].id = 5;
+	philo[2].id = 2;
+	printf("test %d\n", philo[0].id);
+	printf("test %d\n", philo[2].id);
 	return (0);
 }
