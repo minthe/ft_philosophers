@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/07 11:44:25 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:29:52 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,12 @@ typedef struct s_data
 	int				nbr_eat;
 	struct timeval	start;
 	struct timeval	end;
-} t_data;
+}					t_data;
 
 typedef struct s_philo
 {
 	int			id;
-	t_thread	routine;
-	t_thread	monitor;
-	t_data		*data;
-} t_philo;
-
+}				t_philo;
 
 /*
 ** utils
