@@ -8,6 +8,7 @@ RM		= rm -f
 
 SOURCE	=	main.c \
 			utils.c \
+			time.c \
 
 OBJECTS	= $(SOURCE:.c=.o)
 

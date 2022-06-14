@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:11:54 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 21:23:11 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/14 23:01:59 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,5 @@ int	check_char(const char *str)
 			return (-1);
 		i++;
 	}
-	return (0);
-}
-
-long long	time_current(long long time)
-{
-	printf("Time taken for all threads: %ld mili seconds\n",\
-		((data.end.tv_sec * 1000000 + data.end.tv_usec)\
-		 - (data.start.tv_sec * 1000000 + data.start.tv_usec)));
 	return (0);
 }

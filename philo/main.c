@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 20:57:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/14 23:35:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,19 @@ static int	check_input(int argc, char *argv[])
 	int	i;
 
 	if (argc < 5 || argc > 6)
-		return (1);
+		return (printf("\n** incorrect numbers of parameters **\n\n"));
 	i = 1;
 	while (i < argc)
 	{
 		if (check_char(argv[i]) == -1)
-		{
-			printf("Invalid characters.\n");
-			return (1);
-		}
+			return (printf("\n** invalid characters **\n\n"));
 		else if (ft_atoi(argv[i]) <= 0)
-		{
-			printf("Invalid input. Please use Natural Numbers.\n");
-			return (1);
-		}
+			return (printf \
+			("\n** invalid input - please use natural numbers only **\n\n"));
 		i++;
 	}
 	if (argc == 6 && ft_atoi(argv[5]) == 0)
-	{
-		printf("Invalid input.\n");
-		return (1);
-	}
+		return (printf("\n** invalid input **\n\n"));
 	return (0);
 }
 
@@ -81,6 +73,7 @@ int	main(int argc, char *argv[])
 	if (philo == NULL)
 		return (0);
 	parse_philo(&data, philo);
-	printf("Test: %d\n", philo[0].id); // debugging
+	data.start = time_current();
+	printf("Time_offset: %lld\n", time_offset(data.start));
 	return (0);
 }

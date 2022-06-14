@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 21:16:04 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/14 23:16:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ typedef struct s_philo
 ** utils
 */
 
-int		check_char(const char *str);
-int		ft_atoi(const char *str);
+int			check_char(const char *str);
+int			ft_atoi(const char *str);
+long long	time_current(void);
+long long	time_offset(long long time);
 
 #endif
