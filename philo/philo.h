@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 21:00:21 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/14 21:16:04 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_data
 {
-	int				death;
 	int				nbr_philo;
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
 	int				nbr_eat;
-	struct timeval	start;
-	struct timeval	end;
+	long long		start;
 }					t_data;
 
 typedef struct s_philo
