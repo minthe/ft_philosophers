@@ -8,8 +8,6 @@ RM		= rm -f
 
 SOURCE	=	main.c \
 			utils.c \
-			utils2.c \
-			utils3.c \
 
 OBJECTS	= $(SOURCE:.c=.o)
 

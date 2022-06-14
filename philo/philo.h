@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 20:29:52 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/14 21:00:21 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,6 @@ typedef struct s_philo
 */
 
 int		check_char(const char *str);
-
 int		ft_atoi(const char *str);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
-void	ft_bzero(void *s, size_t n);
-void	*ft_memset(void *s, int c, size_t n);
-void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

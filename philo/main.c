@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 20:37:34 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:57:49 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int	main(int argc, char *argv[])
 	if (philo == NULL)
 		return (0);
 	parse_philo(&data, philo);
-	printf("Test: %d\n", philo[0].id);
+	printf("Test: %d\n", philo[0].id); // debugging
 	return (0);
 }
