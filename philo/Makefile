@@ -10,6 +10,7 @@ SOURCE	=	main.c \
 			philo.c \
 			utils.c \
 			time.c \
+			threads.c \
 
 OBJECTS	= $(SOURCE:.c=.o)
 

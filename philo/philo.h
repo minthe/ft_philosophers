@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 16:28:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:25:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ int			check_char(const char *str);
 int			ft_atoi(const char *str);
 long long	time_current(void);
 long long	time_passed(long long time);
-int			free_all(t_philo *philo, pthread_mutex_t *mutex);
+int			free_all(t_data *data, t_philo *philo, pthread_mutex_t *mutex);
 
 /*
 ** philo
 */
 
-void		philo_cycle(t_philo *philo);
+void		*philo_cycle(void *ptr);
+int			init_threads(t_philo *philo);
+int			manage_threads(t_philo *philo);
 
 #endif

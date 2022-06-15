@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 16:25:24 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:25:41 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	check_input(int argc, char *argv[])
 static t_data	parse_data(int argc, char *argv[])
 {
 	t_data			data;
-	pthread_mutex_t	status;
 
 	data.nbr_philo = ft_atoi(argv[1]);
 	data.time_die = ft_atoi(argv[2]);
@@ -54,6 +53,7 @@ static t_data	parse_data(int argc, char *argv[])
 static int	parse_philo(t_data *data, t_philo *philo)
 {
 	pthread_mutex_t	*mutex;
+	pthread_mutex_t	status;
 	int				i;
 
 	mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
@@ -65,9 +65,12 @@ static int	parse_philo(t_data *data, t_philo *philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
-		philo[i].fork = &mutex[i]; // correct assigned?
+		philo[i].fork = &mutex[i]; // correct?
 		if (pthread_mutex_init(philo[i].fork, 0))
-			return (free_all(philo, mutex));
+			return (free_all(NULL, philo, mutex));
+		if (pthread_mutex_init(&status, 0))
+			return (free_all(NULL, philo, mutex));
+		philo[i].data->status = status;
 		i++;
 	}
 	return (0);
@@ -86,5 +89,7 @@ int	main(int argc, char *argv[])
 		return (0);
 	if (parse_philo(&data, philo))
 		return (printf("\n** mutex failed **\n\n"));
+	init_threads(philo);
+	manage_threads(philo);
 	return (0);
 }
