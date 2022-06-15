@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 23:35:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:32:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static t_data	parse_data(int argc, char *argv[])
 	data.time_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data.nbr_eat = ft_atoi(argv[5]);
+	data.start = time_current();
 	return (data);
 }
 
@@ -57,6 +58,7 @@ static void	parse_philo(t_data *data, t_philo *philo)
 	while (i < data->nbr_philo)
 	{
 		philo[i].id = i + 1;
+		philo[i].data = data;
 		i++;
 	}
 }
@@ -73,7 +75,6 @@ int	main(int argc, char *argv[])
 	if (philo == NULL)
 		return (0);
 	parse_philo(&data, philo);
-	data.start = time_current();
-	printf("Time_offset: %lld\n", time_offset(data.start));
+	printf("Time_offset: %lld\n", time_passed(data.start));
 	return (0);
 }

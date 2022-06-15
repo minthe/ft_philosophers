@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 23:02:07 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 23:24:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:33:18 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ long long	time_current(void)
 }
 
 // returns the time passed since start in miliseconds
-long long	time_offset(long long time)
+long long	time_passed(long long time)
 {
 	struct timeval	time_store;
 	long long		time_offset;

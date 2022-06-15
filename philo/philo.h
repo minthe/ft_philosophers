@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/14 23:16:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:33:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int			id;
+	long long	last_meal;
+	t_data		*data;
 }				t_philo;
 
 /*
@@ -44,6 +46,12 @@ typedef struct s_philo
 int			check_char(const char *str);
 int			ft_atoi(const char *str);
 long long	time_current(void);
-long long	time_offset(long long time);
+long long	time_passed(long long time);
+
+/*
+** philo
+*/
+
+void		philo_cycle(t_philo *philo);
 
 #endif

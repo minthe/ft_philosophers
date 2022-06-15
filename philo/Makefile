@@ -7,6 +7,7 @@ FLAGS	= -Werror -Wall -Wextra
 RM		= rm -f
 
 SOURCE	=	main.c \
+			philo.c \
 			utils.c \
 			time.c \
 
