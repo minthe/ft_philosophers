@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 12:32:51 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:56:01 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,17 @@ static t_data	parse_data(int argc, char *argv[])
 // parses infos to struct of philos
 static void	parse_philo(t_data *data, t_philo *philo)
 {
-	int		i;
+	pthread_mutex_t	*mutex;
+	pthread_mutex_t	*display;
+	int				i;
 
 	i = 0;
+	
 	while (i < data->nbr_philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
+		philo[i].display = display;
 		i++;
 	}
 }

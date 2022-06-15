@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 12:33:23 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:55:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int			id;
-	long long	last_meal;
-	t_data		*data;
-}				t_philo;
+	int				id;
+	long long		last_meal;
+	t_data			*data;
+	pthread_mutex_t	*mutex;
+	pthread_mutex_t	*display;
+}					t_philo;
 
 /*
 ** utils
