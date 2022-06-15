@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 12:29:47 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:38:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 // sleeping
 
-void	philo_cycle(t_philo *philo)
-{
+// void	philo_cycle(t_philo *philo)
+// {
 	
-}
+// }

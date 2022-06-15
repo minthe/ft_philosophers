@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 12:56:01 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:25:24 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	check_input(int argc, char *argv[])
 // parses infos to struct of data
 static t_data	parse_data(int argc, char *argv[])
 {
-	t_data	data;
+	t_data			data;
+	pthread_mutex_t	status;
 
 	data.nbr_philo = ft_atoi(argv[1]);
 	data.time_die = ft_atoi(argv[2]);
@@ -50,21 +51,26 @@ static t_data	parse_data(int argc, char *argv[])
 }
 
 // parses infos to struct of philos
-static void	parse_philo(t_data *data, t_philo *philo)
+static int	parse_philo(t_data *data, t_philo *philo)
 {
 	pthread_mutex_t	*mutex;
-	pthread_mutex_t	*display;
 	int				i;
 
+	mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
+		* data->nbr_philo);
+	if (mutex == NULL)
+		return (1);
 	i = 0;
-	
 	while (i < data->nbr_philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
-		philo[i].display = display;
+		philo[i].fork = &mutex[i]; // correct assigned?
+		if (pthread_mutex_init(philo[i].fork, 0))
+			return (free_all(philo, mutex));
 		i++;
 	}
+	return (0);
 }
 
 int	main(int argc, char *argv[])
@@ -78,7 +84,7 @@ int	main(int argc, char *argv[])
 	philo = (t_philo *)malloc(sizeof(t_philo) * data.nbr_philo);
 	if (philo == NULL)
 		return (0);
-	parse_philo(&data, philo);
-	printf("Time_offset: %lld\n", time_passed(data.start));
+	if (parse_philo(&data, philo))
+		return (printf("\n** mutex failed **\n\n"));
 	return (0);
 }

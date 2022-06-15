@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 12:55:14 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:28:08 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data
 	int				time_sleep;
 	int				nbr_eat;
 	long long		start;
+	pthread_mutex_t	status;
 }					t_data;
 
 typedef struct s_philo
@@ -37,8 +38,7 @@ typedef struct s_philo
 	int				id;
 	long long		last_meal;
 	t_data			*data;
-	pthread_mutex_t	*mutex;
-	pthread_mutex_t	*display;
+	pthread_mutex_t	*fork;
 }					t_philo;
 
 /*
@@ -49,6 +49,7 @@ int			check_char(const char *str);
 int			ft_atoi(const char *str);
 long long	time_current(void);
 long long	time_passed(long long time);
+int			free_all(t_philo *philo, pthread_mutex_t *mutex);
 
 /*
 ** philo
