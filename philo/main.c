@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 17:25:41 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:16:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	parse_philo(t_data *data, t_philo *philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
-		philo[i].fork = &mutex[i]; // correct?
+		philo[i].fork = &mutex[i];
 		if (pthread_mutex_init(philo[i].fork, 0))
 			return (free_all(NULL, philo, mutex));
 		if (pthread_mutex_init(&status, 0))

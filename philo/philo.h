@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 17:25:29 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:14:02 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_philo
 	long long		last_meal;
 	t_data			*data;
 	pthread_mutex_t	*fork;
+	pthread_t		thread;
 }					t_philo;
 
 /*

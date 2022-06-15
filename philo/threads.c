@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 17:28:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:28:41 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,14 @@ int	init_threads(t_philo *philo)
 	i = 0;
 	while (i < philo->data->nbr_philo)
 	{
-		pthread_create(&thread[i], NULL, philo_cycle, philo + i); // need usleep?
-		usleep(100);
+		pthread_create(&thread[i], NULL, philo_cycle, philo + i);
+		philo[i].thread = thread[i];
+		if (i % 2 == 0)
+			usleep(10);
+		if (i % 3 == 0)
+			usleep(20);
+		if (i % 5 == 0)
+			usleep(30);
 		i++;
 	}
 	return (0);
