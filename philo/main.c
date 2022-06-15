@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 18:16:36 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:33:37 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int	main(int argc, char *argv[])
 	if (parse_philo(&data, philo))
 		return (printf("\n** mutex failed **\n\n"));
 	init_threads(philo);
-	manage_threads(philo);
+	//manage_threads(philo);
 	return (0);
 }

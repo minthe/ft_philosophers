@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 20:55:25 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:32:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ int	manage_threads(t_philo *philo)
 	{
 		pthread_mutex_destroy(&philo->fork[i]);
 		i++;
+		// free (philo[i].thread);
+		// free (philo[i].fork);
 	}
 	pthread_mutex_destroy(&philo->data->status);
-	if (free_all(NULL, philo, philo->fork))
-		return (printf("\n** mutex failed **\n\n"));
+	if (philo)
+		free(philo);
 	return (0);
 }
