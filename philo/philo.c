@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 22:34:51 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:41:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 static void	print_status(t_philo *philo, long long time, char *str)
 {
-	(void)time;
 	pthread_mutex_lock(&philo->data->status);
-	printf("%lldms	%d %s\n", philo->data->start, philo->id, str);
+	printf("%lldms	%d %s\n", time_passed(time), philo->id, str);
 	pthread_mutex_unlock(&philo->data->status);
 }
 
