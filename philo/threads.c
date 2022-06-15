@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 18:28:41 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 20:55:25 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	init_threads(t_philo *philo)
 	{
 		pthread_create(&thread[i], NULL, philo_cycle, philo + i);
 		philo[i].thread = thread[i];
+		philo[i].last_meal = time_current();
 		if (i % 2 == 0)
 			usleep(10);
 		if (i % 3 == 0)
