@@ -6,16 +6,11 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 11:19:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:41:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	check_fork(t_philo *philo)
-{
-
-}
 
 static void	print_status(t_philo *philo, long long time, char *str)
 {
