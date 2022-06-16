@@ -6,30 +6,24 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 13:13:27 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:46:58 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	print_status(t_philo *philo, long long time, char *str)
-{
-	pthread_mutex_lock(&philo->data->status);
-	printf("%lldms	%d %s\n", time_passed(time), philo->id, str);
-	pthread_mutex_unlock(&philo->data->status);
-}
-
 static int	philo_eating(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->mutex[philo->id - 1]);
-	print_status(philo, philo->data->start, "has taken the left fork");
-	pthread_mutex_lock(&philo->mutex[philo->id]);
-	print_status(philo, philo->data->start, "has taken his fork");
-	print_status(philo, philo->data->start, "is eating");
-	philo->meals++;
-	usleep(philo->data->time_eat * 1000);
-	pthread_mutex_unlock(&philo->mutex[philo->id]);
-	pthread_mutex_unlock(&philo->mutex[philo->id - 1]);
+	if ((!check_fork(philo)) && (!check_left_fork(philo)))
+	{
+		take_fork(philo);
+		print_status(philo, philo->data->start, "has taken his fork");
+		take_left_fork(philo);
+		print_status(philo, philo->data->start, "has taken the left fork");
+		print_status(philo, philo->data->start, "is eating");
+		philo->meals++;
+		usleep(philo->data->time_eat * 1000);
+	}
 	return (0);
 }
 

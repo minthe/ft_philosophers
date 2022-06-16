@@ -11,6 +11,7 @@ SOURCE	=	main.c \
 			utils.c \
 			time.c \
 			threads.c \
+			mutex.c \
 
 OBJECTS	= $(SOURCE:.c=.o)
 

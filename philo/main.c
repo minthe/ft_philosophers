@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 13:17:29 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:31:34 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,45 @@ static t_data	parse_data(int argc, char *argv[])
 	return (data);
 }
 
-// parses infos to struct of philos
-static int	parse_philo(t_data *data, t_philo *philo)
+static int	init_philo(t_philo *philo)
 {
 	pthread_mutex_t	*mutex;
-	pthread_mutex_t	status;
 	int				i;
 
 	mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
-		* data->nbr_philo);
+		* philo->data->nbr_philo);
 	if (mutex == NULL)
+		return (1);
+	i = 0;
+	while (i < philo->data->nbr_philo)
+	{
+		philo[i].mutex = &mutex[i];
+		if (pthread_mutex_init(philo[i].mutex, 0))
+			return (free_all(NULL, philo, mutex));
+		i++;
+	}
+	return (0);
+}
+
+// parses infos to struct of philos
+static int	parse_philo(t_data *data, t_philo *philo)
+{
+	pthread_mutex_t	status;
+	bool			*forks;
+	int				i;
+
+	forks = (bool *)malloc(sizeof(bool) \
+		* data->nbr_philo);
+	if (forks == NULL)
 		return (1);
 	i = 0;
 	while (i < data->nbr_philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
-		philo[i].fork = 0;
-		philo[i].mutex = &mutex[i];
-		if (pthread_mutex_init(philo[i].mutex, 0))
-			return (free_all(NULL, philo, mutex));
+		philo[i].fork = &forks[i];
 		if (pthread_mutex_init(&status, 0))
-			return (free_all(NULL, philo, mutex));
+			return (free_all(NULL, philo, &status));
 		philo[i].data->status = status;
 		i++;
 	}
@@ -90,6 +107,7 @@ int	main(int argc, char *argv[])
 		return (0);
 	if (parse_philo(&data, philo))
 		return (printf("\n** mutex failed **\n\n"));
+	init_philo(philo);
 	init_threads(philo);
 	manage_threads(philo);
 	return (0);
