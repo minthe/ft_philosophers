@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 23:02:07 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 13:14:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:42:20 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ long long	time_passed(long long time)
 	struct timeval	time_store;
 	long long		time_offset;
 
+	time_offset = 0;
 	gettimeofday(&time_store, NULL);
 	time_offset = (time_store.tv_sec * 1000 + time_store.tv_usec / 1000) - time;
 	return (time_offset);

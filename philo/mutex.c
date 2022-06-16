@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:47:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 14:47:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:57:18 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,25 @@ int	check_left_fork(t_philo *philo)
 	return (status);
 }
 
-float	take_fork(t_philo *philo)
+void	handle_fork(t_philo *philo, bool action)
 {
 	pthread_mutex_lock(&philo->mutex[philo->id]);
-	philo->fork[philo->id] = 0;
+	philo->fork[philo->id] = action;
 	pthread_mutex_unlock(&philo->mutex[philo->id]);
 }
 
-float	take_left_fork(t_philo *philo)
+void	handle_left_fork(t_philo *philo, bool action)
 {
 	if (philo->id > 1)
 	{
 		pthread_mutex_lock(&philo->mutex[philo->id - 1]);
-		philo->fork[philo->id - 1] = 0;
+		philo->fork[philo->id - 1] = action;
 		pthread_mutex_unlock(&philo->mutex[philo->id - 1]);
 	}
 	else if (philo->id < 2)
 	{
 		pthread_mutex_lock(&philo->mutex[philo->data->nbr_philo]);
-		philo->fork[philo->data->nbr_philo] = 0;
+		philo->fork[philo->data->nbr_philo] = action;
 		pthread_mutex_unlock(&philo->mutex[philo->data->nbr_philo]);
 	}
 }

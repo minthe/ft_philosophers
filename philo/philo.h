@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 14:48:25 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:23:41 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
+# define TAKE 1
+# define LEAVE 0
+
 typedef pthread_t		t_thread;
 typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_data
 {
+	bool			death;
 	int				nbr_philo;
 	int				time_die;
 	int				time_eat;
@@ -37,6 +41,7 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int				id;
+	bool			full;
 	int				meals;
 	long long		last_meal;
 	bool			*fork;
@@ -70,7 +75,7 @@ int			manage_threads(t_philo *philo);
 void		print_status(t_philo *philo, long long time, char *str);
 int			check_fork(t_philo *philo);
 int			check_left_fork(t_philo *philo);
-float		take_fork(t_philo *philo);
-float		take_left_fork(t_philo *philo);
+void		handle_fork(t_philo *philo, bool action);
+void		handle_left_fork(t_philo *philo, bool action);
 
 #endif

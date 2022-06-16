@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 14:31:34 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:49:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static t_data	parse_data(int argc, char *argv[])
 	data.time_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data.nbr_eat = ft_atoi(argv[5]);
-	data.start = time_current();
 	return (data);
 }
 
@@ -81,13 +80,14 @@ static int	parse_philo(t_data *data, t_philo *philo)
 	if (forks == NULL)
 		return (1);
 	i = 0;
+	if (pthread_mutex_init(&status, 0))
+		return (free_all(data, philo, &status));
 	while (i < data->nbr_philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
+		philo[i].full = 0;
 		philo[i].fork = &forks[i];
-		if (pthread_mutex_init(&status, 0))
-			return (free_all(NULL, philo, &status));
 		philo[i].data->status = status;
 		i++;
 	}
@@ -108,7 +108,8 @@ int	main(int argc, char *argv[])
 	if (parse_philo(&data, philo))
 		return (printf("\n** mutex failed **\n\n"));
 	init_philo(philo);
-	init_threads(philo);
-	manage_threads(philo);
+	if (init_threads(philo))
+		return (free_all (&data, philo, NULL));
+	//manage_threads(philo);
 	return (0);
 }
