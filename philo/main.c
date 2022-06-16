@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 17:06:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:48:30 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static t_data	parse_data(int argc, char *argv[])
 	data.nbr_philo = ft_atoi(argv[1]);
 	data.time_die = ft_atoi(argv[2]);
 	data.time_eat = ft_atoi(argv[3]);
+	data.full = 0;
 	data.time_sleep = ft_atoi(argv[4]);
+	data.nbr_eat = 0;
 	if (argc == 6)
 		data.nbr_eat = ft_atoi(argv[5]);
 	return (data);
@@ -50,19 +52,18 @@ static t_data	parse_data(int argc, char *argv[])
 
 static int	init_philo(t_philo *philo)
 {
-	pthread_mutex_t	*mutex;
-	int				i;
+	int	i;
 
-	mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
+	philo->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
 		* philo->data->nbr_philo);
-	if (mutex == NULL)
+	if (philo->mutex == NULL)
 		return (1);
 	i = 0;
 	while (i < philo->data->nbr_philo)
 	{
-		philo[i].mutex = &mutex[i];
-		if (pthread_mutex_init(philo[i].mutex, 0))
-			return (free_all(NULL, philo, mutex));
+		philo[i].mutex = philo->mutex;
+		if (pthread_mutex_init(&philo->mutex[i], 0))
+			return (free_all(NULL, philo, philo->mutex));
 		i++;
 	}
 	return (0);
@@ -71,24 +72,21 @@ static int	init_philo(t_philo *philo)
 // parses infos to struct of philos
 static int	parse_philo(t_data *data, t_philo *philo)
 {
-	pthread_mutex_t	status;
-	bool			*forks;
-	int				i;
+	int	i;
 
-	forks = (bool *)malloc(sizeof(bool) \
+	philo->fork = (bool *)malloc(sizeof(bool) \
 		* data->nbr_philo);
-	if (forks == NULL)
+	if (philo->fork == NULL)
 		return (1);
 	i = 0;
-	if (pthread_mutex_init(&status, 0))
-		return (free_all(data, philo, &status));
+	if (pthread_mutex_init(&data->status, 0))
+		return (free_all(NULL, philo, NULL));
 	while (i < data->nbr_philo)
 	{
-		philo[i].id = i + 1;
+		philo[i].id = i;
 		philo[i].data = data;
-		philo[i].full = 0;
-		philo[i].fork = &forks[i];
-		philo[i].data->status = status;
+		philo[i].fork = philo->fork;
+		philo[i].fork[i] = LEAVE;
 		i++;
 	}
 	return (0);
@@ -109,7 +107,10 @@ int	main(int argc, char *argv[])
 		return (printf("\n** mutex failed **\n\n"));
 	init_philo(philo);
 	if (init_threads(philo))
-		return (free_all (&data, philo, NULL));
-	//manage_threads(philo);
+		return (free_all (NULL, philo, NULL));
+	manage_threads(philo, &data);
+	pthread_mutex_destroy(&philo->data->status); // todo
+	pthread_mutex_destroy(philo->mutex); // todo
+	free_all(NULL, philo, NULL);
 	return (0);
 }

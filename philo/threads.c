@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 17:11:35 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:46:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,41 @@ int	init_threads(t_philo *philo)
 	philo->data->start = time_current();
 	while (i < philo->data->nbr_philo)
 	{
-		pthread_create(&thread[i], NULL, philo_cycle, philo + i);
 		philo[i].thread = thread[i];
 		philo[i].last_meal = time_current();
+		pthread_create(&thread[i], NULL, philo_cycle, philo + i);
 		i++;
 	}
 	return (0);
 }
 
-int	manage_threads(t_philo *philo)
+int	manage_threads(t_philo *philo, t_data *data)
 {
 	int	i;
 
 	while (1)
 	{
 		i = 0;
-		while (i < philo->data->nbr_philo)
+		usleep(100);
+		while (i < data->nbr_philo)
 		{
+			pthread_mutex_lock(&data->status);
 			if (time_passed(philo[i].last_meal) > \
-				(long long)philo->data->time_die)
+				(long long)data->time_die)
 			{
-				
+				pthread_mutex_unlock(&data->status);
+				print_status(&philo[i], data->start, "died");
+				return (0);
 			}
+			pthread_mutex_unlock(&data->status);
 		}
-		if ()
+		pthread_mutex_lock(&data->status);
+		if (data->full == data->nbr_philo)
+		{
+			pthread_mutex_unlock(&data->status);
+			break ;
+		}
+		pthread_mutex_unlock(&data->status);
 	}
-	pthread_mutex_destroy(&philo->data->status);
 	return (0);
 }

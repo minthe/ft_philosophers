@@ -6,11 +6,24 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 17:02:50 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:38:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	vf_usleep(long long time_need_sleep)
+{
+	long long	start_time;
+
+	start_time = time_current();
+	while (1)
+	{
+		if (time_passed(start_time) >= time_need_sleep)
+			break ;
+		usleep(10);
+	}
+}
 
 static void	philo_eating(t_philo *philo)
 {
@@ -19,11 +32,11 @@ static void	philo_eating(t_philo *philo)
 	handle_left_fork(philo, TAKE);
 	print_status(philo, philo->data->start, "has taken the left fork");
 	print_status(philo, philo->data->start, "is eating");
-	pthread_mutex_lock(&philo->meals);
 	philo->meals++;
-	pthread_mutex_unlock(&philo->meals);
+	pthread_mutex_lock(&philo->data->status);
 	philo->last_meal = time_current();
-	usleep(philo->data->time_eat * 1000);
+	pthread_mutex_unlock(&philo->data->status);
+	vf_usleep(philo->data->time_eat);
 	handle_fork(philo, LEAVE);
 	print_status(philo, philo->data->start, "returned his fork");
 	handle_left_fork(philo, LEAVE);
@@ -33,7 +46,7 @@ static void	philo_eating(t_philo *philo)
 static int	philo_sleeping(t_philo *philo)
 {
 	print_status(philo, philo->data->start, "is sleeping");
-	usleep(philo->data->time_sleep * 1000);
+	vf_usleep(philo->data->time_sleep);
 	return (0);
 }
 
@@ -43,7 +56,7 @@ void	*philo_cycle(void *ptr)
 
 	philo = (t_philo *)ptr;
 	if (philo->id % 2 == 0)
-		usleep(10);
+		usleep(100);
 	while (1)
 	{
 		if (!check_left_fork(philo) && !check_fork(philo))
@@ -52,6 +65,15 @@ void	*philo_cycle(void *ptr)
 			philo_sleeping(philo);
 			print_status(philo, philo->data->start, "is thinking");
 		}
+		pthread_mutex_lock(&philo->data->status);
+		if (philo->data->nbr_eat && philo->meals == philo->data->nbr_eat)
+		{
+			philo->data->full++;
+			pthread_mutex_unlock(&philo->data->status);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->status);
+		usleep(100);
 	}
 	return (0);
 }

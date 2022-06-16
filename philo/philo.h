@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 15:23:41 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:14:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef pthread_mutex_t	t_mutex;
 typedef struct s_data
 {
 	bool			death;
+	int				full;
 	int				nbr_philo;
 	int				time_die;
 	int				time_eat;
@@ -66,7 +67,7 @@ int			free_all(t_data *data, t_philo *philo, pthread_mutex_t *mutex);
 
 void		*philo_cycle(void *ptr);
 int			init_threads(t_philo *philo);
-int			manage_threads(t_philo *philo);
+int			manage_threads(t_philo *philo, t_data *data);
 
 /*
 ** mutexes
