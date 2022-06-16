@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 20:40:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 11:48:00 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef pthread_t		t_thread;
 typedef pthread_mutex_t	t_mutex;
@@ -36,10 +37,15 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int				id;
+	bool			full;
+	bool			right_fork;
+	bool			*left_fork;
 	int				meals;
 	long long		last_meal;
 	t_data			*data;
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	mfork;
+	pthread_mutex_t	mfull;
+	pthread_mutex_t	mlast_meal;
 	pthread_t		thread;
 }					t_philo;
 
@@ -60,5 +66,7 @@ int			free_all(t_data *data, t_philo *philo, pthread_mutex_t *mutex);
 void		*philo_cycle(void *ptr);
 int			init_threads(t_philo *philo);
 int			manage_threads(t_philo *philo);
+int			init_data(t_data *data);
+int			init_philo(t_data *data);
 
 #endif
