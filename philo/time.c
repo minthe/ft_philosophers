@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 23:02:07 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 12:33:18 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:14:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ long long	time_passed(long long time)
 	long long		time_offset;
 
 	gettimeofday(&time_store, NULL);
-	time_offset = time_store.tv_sec * 1000 + time_store.tv_usec / 1000 - time;
+	time_offset = (time_store.tv_sec * 1000 + time_store.tv_usec / 1000) - time;
 	return (time_offset);
 }

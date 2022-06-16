@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 20:40:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:17:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef pthread_t		t_thread;
 typedef pthread_mutex_t	t_mutex;
@@ -38,8 +39,9 @@ typedef struct s_philo
 	int				id;
 	int				meals;
 	long long		last_meal;
+	bool			fork;
 	t_data			*data;
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	*mutex;
 	pthread_t		thread;
 }					t_philo;
 

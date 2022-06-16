@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/15 22:42:15 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:13:58 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	manage_threads(t_philo *philo)
 	i = 0;
 	while (i < philo->data->nbr_philo)
 	{
-		pthread_mutex_destroy(&philo->fork[i]);
+		pthread_mutex_destroy(&philo->mutex[i]);
 		i++;
 		// free (philo[i].thread);
 		// free (philo[i].fork);
