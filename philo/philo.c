@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 16:22:31 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:02:50 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static void	philo_eating(t_philo *philo)
 	handle_left_fork(philo, TAKE);
 	print_status(philo, philo->data->start, "has taken the left fork");
 	print_status(philo, philo->data->start, "is eating");
+	pthread_mutex_lock(&philo->meals);
 	philo->meals++;
+	pthread_mutex_unlock(&philo->meals);
+	philo->last_meal = time_current();
 	usleep(philo->data->time_eat * 1000);
 	handle_fork(philo, LEAVE);
 	print_status(philo, philo->data->start, "returned his fork");

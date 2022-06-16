@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 15:49:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:11:35 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,19 @@ int	manage_threads(t_philo *philo)
 {
 	int	i;
 
-	i = 0;
-	while (i < philo->data->nbr_philo)
+	while (1)
 	{
-		pthread_mutex_destroy(&philo->mutex[i]);
-		i++;
-		// free (philo[i].thread);
-		// free (philo[i].fork);
+		i = 0;
+		while (i < philo->data->nbr_philo)
+		{
+			if (time_passed(philo[i].last_meal) > \
+				(long long)philo->data->time_die)
+			{
+				
+			}
+		}
+		if ()
 	}
 	pthread_mutex_destroy(&philo->data->status);
-	if (philo)
-		free(philo);
 	return (0);
 }
