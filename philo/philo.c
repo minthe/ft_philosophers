@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 15:54:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:22:31 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@ void	*philo_cycle(void *ptr)
 		usleep(10);
 	while (1)
 	{
-		if (!check_left_fork(philo))
+		if (!check_left_fork(philo) && !check_fork(philo))
 		{
-			if (!check_fork(philo))
-			{
-				philo_eating(philo);
-				philo_sleeping(philo);
-				print_status(philo, philo->data->start, "is thinking");
-			}
+			philo_eating(philo);
+			philo_sleeping(philo);
+			print_status(philo, philo->data->start, "is thinking");
 		}
 	}
 	return (0);
