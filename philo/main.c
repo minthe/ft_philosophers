@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 20:48:30 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 22:46:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ static int	check_input(int argc, char *argv[])
 	{
 		if (check_char(argv[i]) == -1)
 			return (printf("\n** invalid characters **\n\n"));
-		else if (ft_atoi(argv[i]) <= 0)
+		else if (ft_atoi(argv[i]) <= 0 || ft_atoi(argv[i]) > 100000)
 			return (printf \
-			("\n** invalid input - please use natural numbers only **\n\n"));
+			("\n** invalid input - please use valid numbers only **\n\n"));
 		i++;
 	}
-	if (argc == 6 && ft_atoi(argv[5]) == 0)
-		return (printf("\n** invalid input **\n\n"));
 	return (0);
 }
 
@@ -39,6 +37,8 @@ static t_data	parse_data(int argc, char *argv[])
 {
 	t_data			data;
 
+	data.forks = NULL;
+	data.mutexes = NULL;
 	data.nbr_philo = ft_atoi(argv[1]);
 	data.time_die = ft_atoi(argv[2]);
 	data.time_eat = ft_atoi(argv[3]);
@@ -50,20 +50,19 @@ static t_data	parse_data(int argc, char *argv[])
 	return (data);
 }
 
-static int	init_philo(t_philo *philo)
+static int	init_mutex(t_data *data, t_philo *philo)
 {
 	int	i;
 
-	philo->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
-		* philo->data->nbr_philo);
-	if (philo->mutex == NULL)
-		return (1);
+	data->mutexes = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
+		* data->nbr_philo);
+	if (data->mutexes == NULL)
+		return (free_all(data, philo));
 	i = 0;
-	while (i < philo->data->nbr_philo)
+	while (i < data->nbr_philo)
 	{
-		philo[i].mutex = philo->mutex;
-		if (pthread_mutex_init(&philo->mutex[i], 0))
-			return (free_all(NULL, philo, philo->mutex));
+		if (pthread_mutex_init(&data->mutexes[i], 0))
+			return (free_all(data, philo));
 		i++;
 	}
 	return (0);
@@ -74,19 +73,18 @@ static int	parse_philo(t_data *data, t_philo *philo)
 {
 	int	i;
 
-	philo->fork = (bool *)malloc(sizeof(bool) \
+	data->forks = (bool *)malloc(sizeof(bool) \
 		* data->nbr_philo);
-	if (philo->fork == NULL)
-		return (1);
+	if (data->forks == NULL)
+		return (free_all(data, philo));
 	i = 0;
 	if (pthread_mutex_init(&data->status, 0))
-		return (free_all(NULL, philo, NULL));
+		return (free_all(data, philo));
 	while (i < data->nbr_philo)
 	{
 		philo[i].id = i;
 		philo[i].data = data;
-		philo[i].fork = philo->fork;
-		philo[i].fork[i] = LEAVE;
+		data->forks[i] = LEAVE;
 		i++;
 	}
 	return (0);
@@ -102,15 +100,12 @@ int	main(int argc, char *argv[])
 	data = parse_data(argc, argv);
 	philo = (t_philo *)malloc(sizeof(t_philo) * data.nbr_philo);
 	if (philo == NULL)
-		return (0);
-	if (parse_philo(&data, philo))
+		return (printf("\n** philo failed **\n\n"));
+	if (parse_philo(&data, philo) || init_mutex(&data, philo))
 		return (printf("\n** mutex failed **\n\n"));
-	init_philo(philo);
-	if (init_threads(philo))
-		return (free_all (NULL, philo, NULL));
+	init_threads(philo);
 	manage_threads(philo, &data);
-	pthread_mutex_destroy(&philo->data->status); // todo
-	pthread_mutex_destroy(philo->mutex); // todo
-	free_all(NULL, philo, NULL);
+	join_threads(philo, &data);
+	free_all(&data, philo);
 	return (0);
 }

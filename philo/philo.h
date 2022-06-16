@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 20:14:57 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 22:41:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 # define TAKE 1
 # define LEAVE 0
 
-typedef pthread_t		t_thread;
-typedef pthread_mutex_t	t_mutex;
-
 typedef struct s_data
 {
 	bool			death;
@@ -36,6 +33,8 @@ typedef struct s_data
 	int				time_sleep;
 	int				nbr_eat;
 	long long		start;
+	bool			*forks;
+	pthread_mutex_t	*mutexes;
 	pthread_mutex_t	status;
 }					t_data;
 
@@ -45,9 +44,7 @@ typedef struct s_philo
 	bool			full;
 	int				meals;
 	long long		last_meal;
-	bool			*fork;
 	t_data			*data;
-	pthread_mutex_t	*mutex;
 	pthread_t		thread;
 }					t_philo;
 
@@ -59,15 +56,16 @@ int			check_char(const char *str);
 int			ft_atoi(const char *str);
 long long	time_current(void);
 long long	time_passed(long long time);
-int			free_all(t_data *data, t_philo *philo, pthread_mutex_t *mutex);
+int			free_all(t_data *data, t_philo *philo);
 
 /*
 ** philo
 */
 
 void		*philo_cycle(void *ptr);
-int			init_threads(t_philo *philo);
-int			manage_threads(t_philo *philo, t_data *data);
+void		init_threads(t_philo *philo);
+void		manage_threads(t_philo *philo, t_data *data);
+void		join_threads(t_philo *philo, t_data *data);
 
 /*
 ** mutexes

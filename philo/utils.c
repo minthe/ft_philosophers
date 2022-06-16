@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:11:54 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 20:04:33 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/16 21:58:08 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ int	check_char(const char *str)
 	return (0);
 }
 
-int	free_all(t_data *data, t_philo *philo, pthread_mutex_t *mutex)
+int	free_all(t_data *data, t_philo *philo)
 {
-	if (mutex)
-		free(mutex);
+	if (data->forks)
+		free(data->forks);
+	if (data->mutexes)
+		free(data->mutexes);
 	if (philo)
 		free(philo);
-	if (data)
-		free(data);
 	return (1);
 }
