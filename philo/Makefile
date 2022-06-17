@@ -2,7 +2,7 @@ NAME	= philo
 
 CC		= gcc
 
-CFLAGS = -Werror -Wall -Wextra #-fsanitize=thread -g
+CFLAGS = -Werror -Wall -Wextra -fsanitize=thread -g
 
 RM		= rm -f
 

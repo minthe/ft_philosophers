@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 17:32:40 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:41:52 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ void	manage_threads(t_philo *philo, t_data *data)
 		i = 0;
 		while (i < data->n_ph)
 		{
-			pthread_mutex_lock(&data->print);
 			pthread_mutex_lock(&data->status);
 			if (time_passed(philo[i].last_meal) > (long long)data->time_die)
 			{
+				pthread_mutex_lock(&data->print);
 				data->death = 1;
 				printf("%lld %d died\n", time_passed(data->start), \
 				philo[i].id + 1);
+				pthread_mutex_unlock(&data->print);
 				pthread_mutex_unlock(&data->status);
 				return ;
 			}
 			pthread_mutex_unlock(&data->status);
-			pthread_mutex_unlock(&data->print);
 			i++;
 		}
 		if (check_if_full(data))
