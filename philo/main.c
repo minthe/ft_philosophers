@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 22:46:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_data	parse_data(int argc, char *argv[])
 
 	data.forks = NULL;
 	data.mutexes = NULL;
-	data.nbr_philo = ft_atoi(argv[1]);
+	data.n_ph = ft_atoi(argv[1]);
 	data.time_die = ft_atoi(argv[2]);
 	data.time_eat = ft_atoi(argv[3]);
 	data.full = 0;
@@ -55,11 +55,11 @@ static int	init_mutex(t_data *data, t_philo *philo)
 	int	i;
 
 	data->mutexes = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
-		* data->nbr_philo);
+		* data->n_ph);
 	if (data->mutexes == NULL)
 		return (free_all(data, philo));
 	i = 0;
-	while (i < data->nbr_philo)
+	while (i < data->n_ph)
 	{
 		if (pthread_mutex_init(&data->mutexes[i], 0))
 			return (free_all(data, philo));
@@ -74,13 +74,13 @@ static int	parse_philo(t_data *data, t_philo *philo)
 	int	i;
 
 	data->forks = (bool *)malloc(sizeof(bool) \
-		* data->nbr_philo);
+		* data->n_ph);
 	if (data->forks == NULL)
 		return (free_all(data, philo));
 	i = 0;
 	if (pthread_mutex_init(&data->status, 0))
 		return (free_all(data, philo));
-	while (i < data->nbr_philo)
+	while (i < data->n_ph)
 	{
 		philo[i].id = i;
 		philo[i].data = data;
@@ -98,7 +98,7 @@ int	main(int argc, char *argv[])
 	if (check_input(argc, argv))
 		return (0);
 	data = parse_data(argc, argv);
-	philo = (t_philo *)malloc(sizeof(t_philo) * data.nbr_philo);
+	philo = (t_philo *)malloc(sizeof(t_philo) * data.n_ph);
 	if (philo == NULL)
 		return (printf("\n** philo failed **\n\n"));
 	if (parse_philo(&data, philo) || init_mutex(&data, philo))

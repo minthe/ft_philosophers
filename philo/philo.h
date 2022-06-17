@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 22:41:48 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_data
 {
 	bool			death;
 	int				full;
-	int				nbr_philo;
+	int				n_ph;
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
@@ -72,9 +72,9 @@ void		join_threads(t_philo *philo, t_data *data);
 */
 
 void		print_status(t_philo *philo, long long time, char *str);
-int			check_fork(t_philo *philo);
-int			check_left_fork(t_philo *philo);
-void		handle_fork(t_philo *philo, bool action);
-void		handle_left_fork(t_philo *philo, bool action);
+int			take_fork(t_philo *philo);
+int			take_left_fork(t_philo *philo);
+void		return_fork(t_philo *philo);
+void		return_left_fork(t_philo *philo);
 
 #endif

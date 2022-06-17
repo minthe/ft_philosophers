@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 14:26:27 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_threads(t_philo *philo)
 
 	i = 0;
 	philo->data->start = time_current();
-	while (i < philo->data->nbr_philo)
+	while (i < philo->data->n_ph)
 	{
 		philo[i].last_meal = time_current();
 		pthread_create(&(philo[i].thread), NULL, philo_cycle, philo + i);
@@ -29,7 +29,7 @@ void	init_threads(t_philo *philo)
 static int	check_if_full(t_data *data)
 {
 	pthread_mutex_lock(&data->status);
-	if (data->full == data->nbr_philo)
+	if (data->full == data->n_ph)
 	{
 		pthread_mutex_unlock(&data->status);
 		return (1);
@@ -45,7 +45,7 @@ void	manage_threads(t_philo *philo, t_data *data)
 	while (1)
 	{
 		i = 0;
-		while (i < data->nbr_philo)
+		while (i < data->n_ph)
 		{
 			pthread_mutex_lock(&data->status);
 			if (time_passed(philo[i].last_meal) > (long long)data->time_die)
@@ -69,13 +69,13 @@ void	join_threads(t_philo *philo, t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->nbr_philo)
+	while (i < data->n_ph)
 	{
 		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
 	i = 0;
-	while (i < data->nbr_philo)
+	while (i < data->n_ph)
 	{
 		pthread_mutex_destroy(&data->mutexes[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 14:42:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,45 @@ static void	vf_usleep(long long time_need_sleep)
 	}
 }
 
-static int	philo_eating(t_philo *philo)
+static int	getting_forks(t_philo *philo)
 {
-	handle_fork(philo, TAKE);
-	print_status(philo, philo->data->start, "has taken his fork");
-	if (philo->data->nbr_philo == 1)
+	if (take_fork(philo) == LEAVE)
 		return (1);
-	handle_left_fork(philo, TAKE);
-	print_status(philo, philo->data->start, "has taken the left fork");
+	if (philo->data->n_ph == 1)
+		return (1);
+	if (take_left_fork(philo) == LEAVE)
+		return (1);
+	return (0);
+}
+
+static void	philo_eating(t_philo *philo)
+{
 	print_status(philo, philo->data->start, "is eating");
 	philo->meals++;
 	pthread_mutex_lock(&philo->data->status);
 	philo->last_meal = time_current();
 	pthread_mutex_unlock(&philo->data->status);
 	vf_usleep(philo->data->time_eat);
-	handle_fork(philo, LEAVE);
+	return_fork(philo);
 	print_status(philo, philo->data->start, "returned his fork");
-	handle_left_fork(philo, LEAVE);
-	print_status(philo, philo->data->start, "returned the left fork");
-	return (0);
-}
-
-static int	philo_sleeping(t_philo *philo)
-{
+	return_left_fork(philo);
+	print_status(philo, philo->data->start, "returned left fork");
 	print_status(philo, philo->data->start, "is sleeping");
 	vf_usleep(philo->data->time_sleep);
+	print_status(philo, philo->data->start, "is thinking");
+}
+
+static int	philo_check_status(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->status);
+	if ((philo->data->nbr_eat && philo->meals == philo->data->nbr_eat)
+		|| philo->data->death)
+	{
+		philo->data->full++;
+		pthread_mutex_unlock(&philo->data->status);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->status);
 	return (0);
 }
 
@@ -62,23 +76,10 @@ void	*philo_cycle(void *ptr)
 		usleep(philo->data->time_eat * 1000);
 	while (1)
 	{
-		// try to get the forks
-		if (!check_left_fork(philo) && !check_fork(philo))
-		{
-			pthread_mutex_lock(&philo->data->status);
-			if ((philo->data->nbr_eat && philo->meals == philo->data->nbr_eat)
-				|| philo->data->death)
-			{
-				philo->data->full++;
-				pthread_mutex_unlock(&philo->data->status);
-				return (0);
-			}
-			pthread_mutex_unlock(&philo->data->status);
-			if (philo_eating(philo))
-				break ;
-			philo_sleeping(philo);
-			print_status(philo, philo->data->start, "is thinking");
-		}
+		if (philo_check_status(philo))
+			return (0);
+		if (getting_forks(philo) == 0)
+			philo_eating(philo);
 	}
 	return (0);
 }
