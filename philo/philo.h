@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:13:15 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:30:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_data
 	bool			*forks;
 	pthread_mutex_t	*mutexes;
 	pthread_mutex_t	status;
+	pthread_mutex_t	print;
 }					t_data;
 
 typedef struct s_philo

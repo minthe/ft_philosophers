@@ -2,7 +2,7 @@ NAME	= philo
 
 CC		= gcc
 
-FLAGS = -Werror -Wall -Wextra -g  -fsanitize=thread
+CFLAGS = -Werror -Wall -Wextra #-fsanitize=thread -g
 
 RM		= rm -f
 
@@ -18,10 +18,10 @@ OBJECTS	= $(SOURCE:.c=.o)
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJECTS)
-	$(CC) $(FLAGS) $(OBJECTS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
 
 clean:
 	rm -rf $(OBJECTS)

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:07:13 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:30:12 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static int	parse_philo(t_data *data, t_philo *philo)
 		return (free_all(data, philo));
 	i = 0;
 	if (pthread_mutex_init(&data->status, 0))
+		return (free_all(data, philo));
+	if (pthread_mutex_init(&data->print, 0))
 		return (free_all(data, philo));
 	while (i < data->n_ph)
 	{

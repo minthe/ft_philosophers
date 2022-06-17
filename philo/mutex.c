@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:47:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:30:43 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	print_status(t_philo *philo, long long time, char *str)
 {
-	pthread_mutex_lock(&philo->data->status);
+	pthread_mutex_lock(&philo->data->print);
 	if (!philo->data->death)
 		printf("%lld %d %s\n", time_passed(time), philo->id + 1, str);
-	pthread_mutex_unlock(&philo->data->status);
+	pthread_mutex_unlock(&philo->data->print);
 }
 
 void	return_fork(t_philo *philo)
@@ -49,7 +49,6 @@ int	take_fork(t_philo *philo)
 	if (philo->data->forks[philo->id] == 0)
 	{
 		philo->data->forks[philo->id] = TAKE;
-		print_status(philo, philo->data->start, "has taken his fork");
 		pthread_mutex_unlock(&philo->data->mutexes[philo->id]);
 		return (TAKE);
 	}
@@ -65,7 +64,6 @@ int	take_left_fork(t_philo *philo)
 		if (philo->data->forks[philo->id - 1] == 0)
 		{
 			philo->data->forks[philo->id - 1] = TAKE;
-			print_status(philo, philo->data->start, "has taken left fork");
 			pthread_mutex_unlock(&philo->data->mutexes[philo->id - 1]);
 			return (TAKE);
 		}
@@ -77,7 +75,6 @@ int	take_left_fork(t_philo *philo)
 		if (!philo->data->forks[philo->data->n_ph - 1])
 		{
 			philo->data->forks[philo->data->n_ph - 1] = TAKE;
-			print_status(philo, philo->data->start, "has taken left fork");
 			pthread_mutex_unlock(&philo->data->mutexes[philo->data->n_ph - 1]);
 			return (TAKE);
 		}

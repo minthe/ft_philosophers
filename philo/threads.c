@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 16:52:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:32:40 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	manage_threads(t_philo *philo, t_data *data)
 		i = 0;
 		while (i < data->n_ph)
 		{
+			pthread_mutex_lock(&data->print);
 			pthread_mutex_lock(&data->status);
 			if (time_passed(philo[i].last_meal) > (long long)data->time_die)
 			{
@@ -57,6 +58,7 @@ void	manage_threads(t_philo *philo, t_data *data)
 				return ;
 			}
 			pthread_mutex_unlock(&data->status);
+			pthread_mutex_unlock(&data->print);
 			i++;
 		}
 		if (check_if_full(data))
@@ -81,4 +83,5 @@ void	join_threads(t_philo *philo, t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&data->status);
+	pthread_mutex_destroy(&data->print);
 }
