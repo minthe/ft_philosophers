@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/16 22:57:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 13:57:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	vf_usleep(long long time_need_sleep)
 
 static int	philo_eating(t_philo *philo)
 {
+	vf_usleep(200);
 	handle_fork(philo, TAKE);
 	print_status(philo, philo->data->start, "has taken his fork");
 	if (philo->data->nbr_philo == 1)
