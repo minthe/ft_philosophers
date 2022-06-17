@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:02:19 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 13:35:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 14:26:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	manage_threads(t_philo *philo, t_data *data)
 	while (1)
 	{
 		i = 0;
-		usleep(100);
 		while (i < data->nbr_philo)
 		{
 			pthread_mutex_lock(&data->status);
