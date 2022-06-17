@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:40:18 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/06/17 14:26:46 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/06/17 14:42:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ void	*philo_cycle(void *ptr)
 		// try to get the forks
 		if (!check_left_fork(philo) && !check_fork(philo))
 		{
-			if (philo_eating(philo))
-				break ;
 			pthread_mutex_lock(&philo->data->status);
 			if ((philo->data->nbr_eat && philo->meals == philo->data->nbr_eat)
 				|| philo->data->death)
 			{
 				philo->data->full++;
 				pthread_mutex_unlock(&philo->data->status);
-				break ;
+				return (0);
 			}
 			pthread_mutex_unlock(&philo->data->status);
+			if (philo_eating(philo))
+				break ;
 			philo_sleeping(philo);
 			print_status(philo, philo->data->start, "is thinking");
 		}
